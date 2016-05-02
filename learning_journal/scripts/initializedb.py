@@ -11,12 +11,12 @@ from pyramid.paster import (
 
 from pyramid.scripts.common import parse_vars
 
-from ..models import (
+from ..models.meta import (
     DBSession,
-    MyModel,
     Base,
     )
 
+from ..models import Entry
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
@@ -36,5 +36,5 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = MyModel(name='one', value=1)
+        model = Entry(title=u'title', body=u'body')
         DBSession.add(model)
